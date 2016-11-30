@@ -7,10 +7,9 @@
 ;;
 ;; USER-EMACS-DIR/  --- user-emacs-directory
 ;;  |   init.el --- include a script to gen. `_init-loader.el', then load them
+;;  |   _init-loader.el --- loader init files. (DO NOT EDIT MANUALLY)
 ;;  |
 ;;  \---conf.d  --- other config files directory. (by variable)
-;;          _init-loader.el --- loader init files. (DO NOT EDIT MANUALLY)
-;;          _basic.el       --- manual loading init file.
 ;;          _foo-ignored.el --- ignore files from `OIU-gen-init-loader',
 ;;                              filename beginning from underscore (`_')
 ;;          foo.el          --- loaded with _init-loader
@@ -36,6 +35,7 @@
   (when (file-exists-p OIU-init-loader-filename)
     (message "maybe `%s' is updated successfully" OIU-init-loader-filename)))
 
+;; manual loading init file. (currently unused)
 ;;(load (concat user-emacs-directory "conf.d/basic/_basic.el"))
 
 (when (file-exists-p OIU-init-loader-filename)
