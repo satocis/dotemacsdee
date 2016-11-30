@@ -1,0 +1,22 @@
+# -*- mode: python; coding: utf-8-unix; -*-
+APPNAME = 'noname'
+VERSION = '1.0.0'
+
+srcdir = '.'
+blddir = 'build.tmp'            # Directory for building use
+
+def set_options(opt):
+    # setup build
+    pass
+
+def configure(conf):
+    # call when `waf configure'
+    pass
+
+def build(bld):
+    # call when `waf build'
+    pass
+
+def shutdown(ctx):
+    # tear down build
+    pass

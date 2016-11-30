@@ -1,0 +1,10 @@
+(defun LKJ-delete-all-elisp-backup-file (_dir)
+  "Delete `*.el~' files in given directory."
+  (interactive "D Directory to delete `*.el~': ")
+  (when (file-directory-p _dir)
+	(let ((_file-list (directory-files _dir nil "^.*\\.el~\\'" t)))
+	  (dolist (_f _file-list)
+		(princ (concat "\n" _f) t)
+		(let ((_fn (concat _dir "/" _f)))
+		  (if (file-regular-p _fn)
+			  (delete-file _fn)))))))

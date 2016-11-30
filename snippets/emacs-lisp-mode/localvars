@@ -1,0 +1,9 @@
+# -*- snippet -*-
+# name: localvars
+# key: localvars
+# --
+;; `(concat "Local " "Variables:")`
+;; mode: emacs-lisp
+;; coding: utf-8-unix
+;; End:
+$0

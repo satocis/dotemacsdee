@@ -1,0 +1,78 @@
+;;; .tc --- tc config
+;;
+;;; Commentary:
+;;		This file load in `tc-setup' after loading `tc-pre' and `tc-sysdep'.
+;;		`tc' may be not loaded yet.
+;;
+;;; Code:
+
+(setq tcode-data-directory (expand-file-name "~/.emacs.d/tcode/")) ; defined by `tc-pre'
+
+;;; set input method to use
+;; tcode-default-input-method is defined by `tc-pre'
+;;
+;;;(setq tcode-default-input-method "japanese-T-Code")
+;;;(setq tcode-default-input-method "japanese-Try-Code")
+(setq tcode-default-input-method "japanese-Tmy-Code")
+
+
+(setq tcode-use-isearch nil)			; ミニバッファでは個別にON
+(setq tcode-bushu-on-demand 0)			; 部首合成変換辞書を`tc.el'ロード時に初期化
+;;;(setq eelll-use-image nil)
+(setq tcode-help-first-stroke "１")
+(setq tcode-help-second-stroke "２")
+
+
+;;; add Tmy-Code to package-list
+;;  tcode-package-name-alist is defined by `tc-pre'
+(add-to-list 'tcode-package-name-alist
+			 '("japanese-Tmy-Code" . "tmy-tbl"))
+
+;; and register to emacs
+(register-input-method "japanese-Tmy-Code"
+					   "Japanese"
+					   'tcode-use-package
+					   "Tm"
+					   "a kanji direct input method")
+
+
+;;; keyboard layout settings
+;; define extra layout first
+(defconst LKJ-tcode-extra-layout-list
+  '(("130601" . (?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
+					?q ?w ?d ?m ?y ?j ?o ?i ?r ?b
+					?l ?s ?u ?a ?f ?g ?e ?h ?t ?n
+					?z ?x ?c ?v ?p ?k ?' ?, ?. ?/))
+	("oea" . (?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
+				?x ?- ?q ?\; ?f ?j ?m ?r ?w ?p
+				?o ?e ?a ?i ?u ?g ?h ?t ?s ?n
+				?, ?. ?v ?y ?k ?d ?c ?l ?b ?z)))
+  "tc用の追加配列データリスト")
+
+;; add extra layout and reset layout
+(defun LKJ-tcode-keyboard-layout-customization ()
+  "Ad-hoc function for customize tcode keyboard layout."
+  ;; tcode-key-layout-list is defined by `tc' originally
+  (setq tcode-key-layout-list
+		(append LKJ-tcode-extra-layout-list tcode-key-layout-list))
+
+  ;; *-shiftだとShift-LETTERでアルファベットが直接入力できない
+  ;; select `qwerty' or `dvorak' or `oea' or `130601'
+  (tcode-set-key-layout "qwerty"))
+
+;; add some tcode ignoring commands
+(defun LKJ-add-command-to-tcode-input-command-list ()
+  "Add additional commands for `tcode-input-command-list'."
+  (add-to-list 'tcode-input-command-list 'csharp-maybe-insert-codedoc))
+
+;; finally, add hook that functions
+(mapc #'(lambda (fn-sym) (add-hook 'tcode-ready-hook fn-sym))
+	  '(LKJ-tcode-keyboard-layout-customization
+		LKJ-add-command-to-tcode-input-command-list))
+
+;; Local Variables:
+;; mode: emacs-lisp
+;; coding: utf-8-unix
+;; End:
+
+;;; .tc ends here
