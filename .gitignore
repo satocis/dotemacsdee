@@ -1,0 +1,16 @@
+# ignore all of root
+/*
+
+# ignore byte compile elisp code
+*.elc
+
+# add root files
+!init.el
+!.tc
+
+# add root directories
+!/conf.d/
+!/site-elisp/
+!/snippets/
+!/templates/
+!/test-elisp/
