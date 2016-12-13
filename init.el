@@ -18,6 +18,10 @@
 ;;              :
 ;;
 
+;; Keep following comment line
+;; To avoid automatically update this by packge.el
+;;(package-initialize)
+
 (when load-file-name
   (setq user-emacs-directory (file-name-directory load-file-name)))
 
